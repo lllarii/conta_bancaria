@@ -56,13 +56,48 @@ export class ContaController implements ContaRepository
         }
     }
     sacar(numero: number, valor: number): void {
-        throw new Error("Method not implemented.");
+        let conta = this.buscarnoArray(numero);
+
+        if (conta != null)
+        {
+            if(conta.sacar(valor) == true)
+            {
+                console.log(colors.fg.greenstrong, `\nO saque na conta número: ${numero} foi efetuado com sucesso`, colors.reset);
+            }
+        }
+        else{
+            console.log(colors.fg.redstrong, `\nA conta número ${numero} não foi encontrada!`, colors.reset);
+        }
     }
     depositar(numero: number, valor: number): void {
-        throw new Error("Method not implemented.");
+        let conta = this.buscarnoArray(numero);
+
+        if (conta != null)
+        {
+            conta.depositar(valor);
+            console.log(colors.fg.greenstrong, `\nO depósito na conta número: ${numero} foi efetuado com sucesso`, colors.reset);
+        }
+        else
+        {
+            console.log(colors.fg.redstrong, `\nA conta número ${numero} não foi encontrada!`, colors.reset);
+        }
     }
     transferir(numeroOrigem: number, numeroDestino: number, valor: number): void {
-        throw new Error("Method not implemented.");
+        let contaOrigem = this.buscarnoArray(numeroOrigem);
+        let contaDestino = this.buscarnoArray(numeroDestino);
+
+        if (contaOrigem != null && contaDestino != null)
+        {
+            if(contaOrigem.sacar(valor) == true)
+            {
+                contaDestino.depositar(valor);
+                console.log(colors.fg.greenstrong, `\n A transferência da conta número: ${numeroOrigem} para a conta número: ${numeroDestino} foi efetuada com sucesso`, colors.reset);
+            }
+        }
+        else
+        {
+            console.log(colors.fg.redstrong,`\nA conta número: ${numeroOrigem} e/ou a conta número: ${numeroDestino} não foram encontradas!`, colors.reset);
+        }
     }
     
     //GERAR NÚMERO DA CONTA
